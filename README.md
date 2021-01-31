@@ -1,10 +1,16 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+## `To create new React app`
+1. run `npx create-react-app {name of app}`
+2. create github repository
+3. add "engines" to package.json
+    ```
+    "engines": {
+      "npm": "6.14.10", // {npm -v}
+      "node": "10.23.1" // {node -v}
+    },
+    ```
+4. on heroku.com, create new app
+5. heroku -> deploy -> deployment method : github
+6. heroku -> settings -> buildpack : add buildpack https://github.com/mars/create-react-app-buildpack
 
 ### `npm start`
 
