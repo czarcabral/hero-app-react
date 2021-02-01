@@ -1,40 +1,46 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Link,
 } from "react-router-dom";
 import './heroes.css'
 
-class Heroes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      heroes: [
-        {id: 1, name: "Gab"},
-        {id: 2, name: "Andre"},
-        {id: 3, name: "Kev"},
-      ]
-    }
+const Heroes = (props) => {
+  const [heroes, setHeroes] = useState([{ id: 1, name: "Gab" }, { id: 2, name: "Andre" }, { id: 3, name: "Kev" },]);
+
+  const getHeroes = () => {
+    fetch("https://hero-server-andre.herokuapp.com/api/heroes", { method: "GET" }).then(response => {
+      console.log("before converting to json", response);
+      return response.json();
+    }).then(response => {
+      setHeroes(response);
+    }).catch(err => {
+      console.log(err);
+    });
   }
-  render() {
-    const heroes = this.state.heroes.map(hero => {
-      return (
-        <li>
-          <Link>
-            <span className="badge">{hero.id}</span> {hero.name}
-          </Link>
-          <button className="delete">X</button>
-        </li>
-      )
-    })
+
+  useEffect(() => {
+    getHeroes();
+  }, []);
+
+  const heroesElements = heroes.map(hero => {
     return (
-      <div>
-        <h2>My Heroes</h2>
-        <ul className="heroes">
-        </ul>
-        {heroes}
-      </div>
+      <li key={hero.id}>
+        <Link to={"/detail/" + hero.id}>
+          <span className="badge">{hero.id}</span> {hero.name}
+        </Link>&nbsp;
+        <button className="delete">X</button>
+      </li>
     );
-  }
+  });
+
+  return (
+    <React.Fragment>
+      <h2>My Heroes</h2>
+      <ul className="heroes">
+        {heroesElements}
+      </ul>
+    </React.Fragment>
+  );
 }
 
 export default Heroes;

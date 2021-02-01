@@ -1,6 +1,7 @@
 import './App.css';
 import Dashboard from './dashboard/dashboard'
 import Heroes from './heroes/heroes'
+import HeroDetails from './hero-details/hero-details'
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,28 +12,29 @@ import {
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Router>
-          <h1 style={{"text-align": "center"}}>Tour of Heroes</h1>
-          <nav style={{"text-align": "center"}}>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <h1 style={{ textAlign: "center" }}>Tour of Heroes</h1>
+          <nav style={{ textAlign: "center" }}>
             <Link to="/dashboard">Dashboard</Link>&nbsp;
             <Link to="/heroes">Heroes</Link>
           </nav>
-          <Switch>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/heroes">
-              <Heroes />
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/dashboard" />
-            </Route>
-          </Switch>
-      </Router>
-      </header>
-    </div>
+        </header>
+        <Switch>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route path="/heroes">
+            <Heroes />
+          </Route>
+          <Route path="/detail/:id" component={HeroDetails} />
+          <Route exact path="/">
+            <Redirect to="/dashboard" />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
